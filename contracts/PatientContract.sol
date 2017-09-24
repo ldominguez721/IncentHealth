@@ -21,8 +21,7 @@ contract PatientContract {
 		_;
 	}
 
-	function addPatient(string n, string e, bytes32 it) onlyProvider returns (bool success){
-		address patientAdd = msg.sender;
+	function addPatient(address patientAdd, string n, string e, bytes32 it) onlyProvider returns (bool success){
 		if(bytes(n).length != 0){
 			patientMap[patientAdd] = Patient(n, e, it);
 			return true;
@@ -31,5 +30,7 @@ contract PatientContract {
 		}
 	}
 
-
+	function getPatient(address patientAdd) constant returns (string, string, bytes32){ //tentative on this; patientAdd shouldn't cause shadowing, but possible?
+		return (patientMap[patientAdd].name, patientMap[patientAdd].email, patientMap[patientAdd].incentivetype);
+	}
 }
